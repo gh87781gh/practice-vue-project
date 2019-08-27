@@ -9,7 +9,9 @@ import VueAxios from 'vue-axios'
 import App from './App'
 
 Vue.use(VueAxios, axios)
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+// 登入驗證附帶 Cookies 設定
+axios.defaults.withCredentials = true;
 
 /* eslint-disable no-new */
 new Vue({
