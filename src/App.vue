@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png" />
+    <!-- 第 1 層頁面元件 -->
     <router-view />
   </div>
 </template>
@@ -18,12 +19,12 @@ export default {
 </script>
 
 <style>
-#app {
+/* #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-}
+} */
 </style>
