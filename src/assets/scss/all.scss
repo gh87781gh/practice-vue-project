@@ -1,0 +1,7 @@
+// config
+@import '~bootstrap/scss/functions';
+@import './config/variables'; // NOTE:自定義變數
+@import '~bootstrap/scss/bootstrap';
+
+// page
+@import './page/dashboard';
