@@ -138,13 +138,13 @@
       id="delProductModal"
       tabindex="-1"
       role="dialog"
-      aria-labelledby="exampleModalLabel"
+      aria-labelledby="delProductModal"
       aria-hidden="true"
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content border-0">
           <div class="modal-header bg-danger text-white">
-            <h5 class="modal-title" id="exampleModalLabel">
+            <h5 class="modal-title" id="delProductModal">
               <span>刪除產品</span>
             </h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -157,7 +157,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-danger">確認刪除</button>
+            <button @click.prevent="DelProduct()" type="button" class="btn btn-danger">確認刪除</button>
           </div>
         </div>
       </div>
@@ -248,7 +248,14 @@ export default {
       });
     },
     DelProduct(){
-
+      console.log('刪除商品');
+      const vm = this;
+      const api = `${process.env.API_PRODUCT}/${vm.tempProduct.id}`;  
+      this.$http.delete(api).then(response => {
+        console.log(response.data);
+        $('#delProductModal').modal('hide');
+        vm.GetProducts();
+      });
     },
   }
 };
