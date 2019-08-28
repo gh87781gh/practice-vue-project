@@ -1,6 +1,8 @@
 <template>
   <div>
     <!-- page begin -->
+    <loading :active.sync="isLoading"></loading>
+
     <div
       class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom"
     >
@@ -68,8 +70,8 @@
                 </div>
                 <div class="form-group">
                   <label for="customFile">
-                    或 上傳圖片
-                    <i class="fas fa-spinner fa-spin"></i>
+                    或 上傳圖片 
+                    <i v-if="status.fileLoading" class="fas fa-spinner fa-spin"></i>
                   </label>
                   <input @change="UploadFile()" type="file" id="customFile" class="form-control" ref="files" />
                 </div>
@@ -188,7 +190,10 @@ export default {
       openModalKind:'', // new,edit,del
       openModalText:'', // 新增產品,編輯產品 
       isNew:false, //new 跟 edit 兩者情況之間判斷的標竿
-
+      isLoading:false,
+      status:{
+        fileLoading:false,
+      }
     };
   },
   created() {
@@ -199,14 +204,16 @@ export default {
       console.log("獲得產品列表");
       const api = process.env.API_GETPRODUCTS;
       const vm = this;
+      vm.isLoading = true;
       this.$http.get(api).then(response => {
         console.log(response.data);
         vm.products = response.data.products;
+        vm.isLoading = false;
       });
     },
     CallModal(kind,item){
       // 判斷叫出 modal 是為了什麼動作
-      console.log('要執行的動作類型：',kind,'帶入的這筆產品資料：',item)
+      console.log('要執行的動作類型：',kind,'帶入的這筆產品資料：',item);
       const vm = this;
       if(kind === 'new'){
         // 建立新產品
@@ -272,6 +279,7 @@ export default {
       const api = process.env.API_FILEUPLOAD;
       //NOTE this.$http.post(url,formData,{格式設定})
       const vm = this;
+      vm.status.fileLoading = true;
       this.$http.post(api,formData,{
         headers:{
           'Content-Type':'multipart/form-data'
@@ -280,6 +288,7 @@ export default {
         console.log(response.data);
         //NOTE vm.$set(目標,'屬性名稱',要設置進去的值);
         vm.$set(vm.tempProduct,'imageUrl',response.data.imageUrl);
+        vm.status.fileLoading = false;
       });
     },
   }

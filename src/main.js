@@ -6,6 +6,8 @@ import router from './router';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import 'bootstrap';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 // 自定義
 import App from './App';
@@ -13,6 +15,8 @@ import App from './App';
 Vue.config.productionTip = false;
 // 啟用套件
 Vue.use(VueAxios, axios);
+// 啟用自定義
+Vue.component('Loading',Loading);
 // 登入驗證附帶 Cookies 設定
 axios.defaults.withCredentials = true;
 
@@ -37,17 +41,17 @@ router.beforeEach((to, from, next) => {
     const vm = this;
     // NOTE:注意！在 router 下，並不是在 vue 的元件內，這邊不能使用「this.$http」，而是要直接使用「axios」！
     axios.post(api).then(response => {
-      console.log('確認登入狀態：',response.data);
-      if(response.data.success){
+      console.log('確認登入狀態：', response.data);
+      if (response.data.success) {
         //是登入狀態，就正常進入該頁
         next();
-      }else{
+      } else {
         //非登入狀態，跳回登入頁面重新登入
         next('/login');
         alert('請先登入');
       }
     });
-  }else{
+  } else {
     next();
   }
 })
