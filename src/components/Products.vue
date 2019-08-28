@@ -53,7 +53,7 @@
         <div class="modal-content border-0">
           <div class="modal-header bg-dark text-white">
             <h5 class="modal-title" id="productModal">
-              <span>新增產品</span>
+              <span>{{openModalText}}</span>
             </h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -186,7 +186,9 @@ export default {
         imageUrl:'',
       },
       openModalKind:'', // new,edit,del
+      openModalText:'', // 新增產品,編輯產品 
       isNew:false, //new 跟 edit 兩者情況之間判斷的標竿
+
     };
   },
   created() {
@@ -209,11 +211,13 @@ export default {
       if(kind === 'new'){
         // 建立新產品
         vm.isNew = true;
+        vm.openModalText = '新增產品';
         vm.tempProduct = {};
         $('#productModal').modal('show');
       }else if(kind === 'edit'){
         // 編輯產品
         vm.isNew = false;
+        vm.openModalText = '編輯產品';
         vm.tempProduct = Object.assign({},item);
         $('#productModal').modal('show');
       }else if(kind === 'del'){
