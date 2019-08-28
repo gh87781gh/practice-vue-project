@@ -71,7 +71,7 @@
                     或 上傳圖片
                     <i class="fas fa-spinner fa-spin"></i>
                   </label>
-                  <input type="file" id="customFile" class="form-control" ref="files" />
+                  <input @change="UploadFile()" type="file" id="customFile" class="form-control" ref="files" />
                 </div>
                 <img :src="tempProduct.imageUrl"
                   class="img-fluid"
@@ -255,6 +255,31 @@ export default {
         console.log(response.data);
         $('#delProductModal').modal('hide');
         vm.GetProducts();
+      });
+    },
+    UploadFile(){
+      console.log('上傳檔案');
+      //上傳圖片的表單格式：https://github.com/hexschool/vue-course-api-wiki/wiki/%E7%AE%A1%E7%90%86%E6%8E%A7%E5%88%B6%E5%8F%B0-%5B%E9%9C%80%E9%A9%97%E8%AD%89%5D#%E4%B8%8A%E5%82%B3%E5%9C%96%E7%89%87
+      //NOTE 這邊上傳圖片需透過 formData 來傳送資料，
+      // 1. 取出上傳的檔案
+      const uploadedFile = this.$refs.files.files[0];
+      // 2. 建立一個新的 formData 物件
+      const formData = new FormData();
+      // 3. 將取出的上傳檔案放入 formData
+      // formData.append(' 欄位名稱 ', 上傳的值);
+      formData.append("file-to-upload", uploadedFile);
+      // 4. 送出 formData
+      const api = process.env.API_FILEUPLOAD;
+      //NOTE this.$http.post(url,formData,{格式設定})
+      const vm = this;
+      this.$http.post(api,formData,{
+        headers:{
+          'Content-Type':'multipart/form-data'
+        }
+      }).then((response)=>{
+        console.log(response.data);
+        //NOTE vm.$set(目標,'屬性名稱',要設置進去的值);
+        vm.$set(vm.tempProduct,'imageUrl',response.data.imageUrl);
       });
     },
   }
