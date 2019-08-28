@@ -44,7 +44,7 @@ export default {
   methods: {
     Login() {
       console.log('執行登入');
-      const api = `${process.env.API_LOGIN}`;
+      const api = process.env.API_LOGIN;
       const vm = this;
       this.$http.post(api, vm.user).then(response => {
         console.log(response.data);

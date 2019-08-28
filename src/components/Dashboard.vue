@@ -30,7 +30,7 @@ export default {
   methods: {
     Logout() {
       console.log("執行登出");
-      const api = `${process.env.API_LOGOUT}`;
+      const api = process.env.API_LOGOUT;
       const vm = this;
       this.$http.post(api).then(response => {
         console.log(response.data);
