@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 // 引入頁面元件
-import HelloWorld from '@/components/HelloWorld';
+import Dashboard from '@/components/Dashboard';
 import Login from '@/components/Login';
 
 
@@ -22,7 +22,7 @@ export default new Router({
     {
       path: '/dashboard',
       name: 'dashboard',
-      component: HelloWorld,
+      component: Dashboard,
       meta: { requiresAuth: true }
     },
   ]
