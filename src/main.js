@@ -11,6 +11,7 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 
 // 自定義
 import App from './App';
+import './bus';
 
 Vue.config.productionTip = false;
 // 啟用套件

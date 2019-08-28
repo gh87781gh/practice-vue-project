@@ -286,8 +286,14 @@ export default {
         }
       }).then((response)=>{
         console.log(response.data);
-        //NOTE vm.$set(目標,'屬性名稱',要設置進去的值);
-        vm.$set(vm.tempProduct,'imageUrl',response.data.imageUrl);
+        if(response.data.success){
+          // 上傳成功
+          //NOTE vm.$set(目標,'屬性名稱',要設置進去的值);
+          vm.$set(vm.tempProduct,'imageUrl',response.data.imageUrl);
+        }else{
+          // 上傳失敗
+          this.$bus.$emit('message:push',response.data.message,'danger');
+        }
         vm.status.fileLoading = false;
       });
     },

@@ -2,6 +2,7 @@
   <div>
     <!-- page begin -->
     <Navbar/>
+    <AlertMsg/>
 
     <div class="container-fluid">
       <div class="row">
@@ -21,11 +22,13 @@
 <script>
 import Navbar from './lib/Navbar';
 import Sidebar from './lib/Sidebar';
+import AlertMsg from './lib/Alertmessage';
 
 export default {
   components:{
     Navbar,
     Sidebar,
+    AlertMsg,
   },
   methods: {
     Logout() {
