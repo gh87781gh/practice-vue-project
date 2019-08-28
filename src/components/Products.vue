@@ -7,7 +7,7 @@
       <h1 class="h2">產品列表</h1>
       <div class="btn-toolbar mb-2 mb-md-0">
         <!-- NOTE call modal -->
-        <button @click.prevent="CallModal()" class="btn btn-primary">新增產品</button>
+        <button @click.prevent="CallModal('new',null)" class="btn btn-primary">新增產品</button>
       </div>
     </div>
 
@@ -33,8 +33,8 @@
             <span v-else class="text-danger">未啟用</span>
           </td>
           <td>
-            <button @click.prevent class="btn btn-outline-primary">編輯</button>
-            <button @click.prevent class="btn btn-outline-danger">刪除</button>
+            <button @click.prevent="CallModal('edit',item)" class="btn btn-outline-primary">編輯</button>
+            <button @click.prevent="CallModal('del',item)" class="btn btn-outline-danger">刪除</button>
           </td>
         </tr>
       </tbody>
@@ -133,7 +133,7 @@
         </div>
       </div>
     </div>
-    <!-- <div
+    <div
       class="modal fade"
       id="delProductModal"
       tabindex="-1"
@@ -161,7 +161,7 @@
           </div>
         </div>
       </div>
-    </div>-->
+    </div>
     <!-- page end -->
   </div>
 </template>
@@ -185,6 +185,8 @@ export default {
         is_enabled:0,
         imageUrl:'',
       },
+      openModalKind:'', // new,edit,del
+      isNew:false, //new 跟 edit 兩者情況之間判斷的標竿
     };
   },
   created() {
@@ -200,20 +202,50 @@ export default {
         vm.products = response.data.products;
       });
     },
-    CallModal(){
-      $('#productModal').modal('show');
+    CallModal(kind,item){
+      // 判斷叫出 modal 是為了什麼動作
+      console.log('要執行的動作類型：',kind,'帶入的這筆產品資料：',item)
+      const vm = this;
+      if(kind === 'new'){
+        // 建立新產品
+        vm.isNew = true;
+        vm.tempProduct = {};
+        $('#productModal').modal('show');
+      }else if(kind === 'edit'){
+        // 編輯產品
+        vm.isNew = false;
+        vm.tempProduct = Object.assign({},item);
+        $('#productModal').modal('show');
+      }else if(kind === 'del'){
+        // 刪除該筆產品
+        vm.tempProduct = Object.assign({},item);
+        $('#delProductModal').modal('show');
+      }
     },
     AddProduct(){
-      console.log('建立產品');
-      const api = process.env.API_ADDPRODUCTS;
+      console.log('建立產品','是否是建立新產品：',this.isNew);
       const vm = this;
-      this.$http.post(api,{data:vm.tempProduct}).then(response => {
+      let api,action;
+
+      if(vm.isNew){
+        // 是建立新產品
+        api = process.env.API_PRODUCT;  
+        action = 'post';
+      }else{
+        // 是編輯原有產品
+        api = `${process.env.API_PRODUCT}/${vm.tempProduct.id}`;  
+        action = 'put';
+      }
+      
+      this.$http[action](api,{data:vm.tempProduct}).then(response => {
         console.log(response.data);
         $('#productModal').modal('hide');
         vm.GetProducts();
       });
     },
+    DelProduct(){
 
+    },
   }
 };
 </script>
