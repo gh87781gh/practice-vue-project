@@ -64,7 +64,7 @@ export default {
     // message: 傳入參數
     // status: 樣式，預設值為 warning
     // NOTE:這裡外層用 on 註冊，到時候內層（其他元件內的 methods）用 emit 去觸發外層的事件
-    // vm.$bus.$on('這側的事件名稱',(參數)=>{...})
+    // vm.$bus.$on('註冊的事件名稱',(參數)=>{...})
     vm.$bus.$on('message:push', (message, status = 'warning') => {
       vm.UpdateMessage(message, status);
     });

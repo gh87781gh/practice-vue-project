@@ -164,17 +164,26 @@
         </div>
       </div>
     </div>
+
+    <!-- NOTE: pagination -->
+    <Pagination :paging="pagination" @triggerPagination="GetProducts"/>
+
     <!-- page end -->
   </div>
 </template>
 
 <script>
 import $ from 'jquery'; 
+import Pagination from './lib/Pagination';
 
 export default {
+  components:{
+    Pagination,
+  },
   data() {
     return {
       products: [],
+      pagination:{},
       tempProduct:{
         title:'',
         category:'',
@@ -200,14 +209,15 @@ export default {
     this.GetProducts();
   },
   methods: {
-    GetProducts() {
-      console.log("獲得產品列表");
-      const api = process.env.API_GETPRODUCTS;
+    GetProducts(turnToPage=1) {
+      console.log("獲得產品列表，第幾頁：",turnToPage);
+      const api = `${process.env.API_GETPRODUCTS}?page=${turnToPage}`;
       const vm = this;
       vm.isLoading = true;
       this.$http.get(api).then(response => {
         console.log(response.data);
         vm.products = response.data.products;
+        vm.pagination = response.data.pagination;
         vm.isLoading = false;
       });
     },
