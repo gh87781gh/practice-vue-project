@@ -130,11 +130,12 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
-            <button @click.prevent="AddProduct()" type="button" class="btn btn-primary">確認</button>
+            <button @click.prevent="SendProduct()" type="button" class="btn btn-primary">確認</button>
           </div>
         </div>
       </div>
     </div>
+    
     <div
       class="modal fade"
       id="delProductModal"
@@ -243,7 +244,7 @@ export default {
         $('#delProductModal').modal('show');
       }
     },
-    AddProduct(){
+    SendProduct(){
       console.log('建立產品','是否是建立新產品：',this.isNew);
       const vm = this;
       let api,action;

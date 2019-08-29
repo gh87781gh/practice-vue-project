@@ -13,6 +13,7 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 import App from './App';
 import './bus';
 import CurrencyFilter from './components/filter/currencyFilter';
+import TimeStampFilter from './components/filter/timestampFilter';
 
 Vue.config.productionTip = false;
 // 啟用套件
@@ -20,6 +21,7 @@ Vue.use(VueAxios, axios);
 // 啟用自定義
 Vue.component('Loading',Loading);
 Vue.filter('CurrencyFilter',CurrencyFilter);
+Vue.filter('TimeStampFilter',TimeStampFilter);
 // 登入驗證附帶 Cookies 設定
 axios.defaults.withCredentials = true;
 
