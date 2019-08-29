@@ -5,6 +5,8 @@ import Router from 'vue-router';
 import Login from '@/components/Login';
 import Dashboard from '@/components/Dashboard';
 import Products from '@/components/products';
+import Orders from '@/components/Orders';
+import Coupons from '@/components/Coupons';
 
 
 Vue.use(Router);
@@ -27,9 +29,21 @@ export default new Router({
       component: Dashboard,
       children:[
         {
-          path: '', //NOTE 子路由路徑不需「/」
+          path: 'products', //NOTE 子路由路徑不需「/」
           name: 'products',
           component: Products,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: 'orders',
+          name: 'orders',
+          component: Orders,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: 'coupons',
+          name: 'coupons',
+          component: Coupons,
           meta: { requiresAuth: true }
         },
       ],

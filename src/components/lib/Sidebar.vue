@@ -5,15 +5,21 @@
       <div class="sidebar-sticky">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <router-link class="nav-link" to="/dashboard">
-              <span data-feather="Products"></span>
+            <router-link class="nav-link" to="/dashboard/products">
+              <i class="fas fa-archive mr-1"></i>
               Products
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/produ">
-              <span data-feather="Products"></span>
-              測試頁面
+            <router-link class="nav-link" to="/dashboard/orders">
+              <i class="fas fa-clipboard-list mr-1"></i>
+              訂單列表
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/dashboard/coupons">
+              <i class="fas fa-ticket-alt mr-1"></i>
+              優惠券
             </router-link>
           </li>
           <!-- <li class="nav-item">
@@ -22,7 +28,7 @@
               Dashboard
               <span class="sr-only">(current)</span>
             </a>
-          </li> -->
+          </li>-->
         </ul>
 
         <!-- <h6
@@ -58,7 +64,7 @@
               Year-end sale
             </a>
           </li>
-        </ul> -->
+        </ul>-->
       </div>
     </nav>
     <!-- page end -->
@@ -66,7 +72,6 @@
 </template>
 
 <script>
-
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
