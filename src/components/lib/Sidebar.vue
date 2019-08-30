@@ -10,7 +10,7 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/dashboard/products">
               <i class="fas fa-archive mr-1"></i>
-              Products
+              產品列表
             </router-link>
           </li>
           <li class="nav-item">

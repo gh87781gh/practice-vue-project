@@ -9,7 +9,7 @@
       <h1 class="h2">優惠券列表</h1>
       <div class="btn-toolbar mb-2 mb-md-0">
         <!-- NOTE call modal -->
-        <button @click.prevent="CallModal('new',null)" class="btn btn-primary">新增優惠券</button>
+        <button @click.prevent="CallModal('new',null)" class="btn btn-secondary">新增優惠券</button>
       </div>
     </div>
 

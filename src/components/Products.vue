@@ -9,7 +9,7 @@
       <h1 class="h2">產品列表</h1>
       <div class="btn-toolbar mb-2 mb-md-0">
         <!-- NOTE call modal -->
-        <button @click.prevent="CallModal('new',null)" class="btn btn-primary">新增產品</button>
+        <button @click.prevent="CallModal('new',null)" class="btn btn-secondary">新增產品</button>
       </div>
     </div>
 
@@ -53,7 +53,7 @@
     >
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content border-0">
-          <div class="modal-header bg-dark text-white">
+          <div class="modal-header bg-secondary text-white">
             <h5 class="modal-title" id="productModal">
               <span>{{openModalText}}</span>
             </h5>

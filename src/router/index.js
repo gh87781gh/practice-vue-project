@@ -29,6 +29,7 @@ export default new Router({
       path: '/dashboard',
       name: '',
       component: Dashboard,
+      meta: { requiresAuth: true },
       children:[
         {
           path: 'products', //NOTE 子路由路徑不需「/」
@@ -52,11 +53,13 @@ export default new Router({
           path: 'simulate_orders',
           name: 'SimulateOrders',
           component: SimulateOrders,
+          meta: { requiresAuth: true }
         },
         {
           path: 'check_out/:id', //動態路由
           name: 'CheckOut',
           component: CheckOut,
+          meta: { requiresAuth: true }
         },
       ],
     },

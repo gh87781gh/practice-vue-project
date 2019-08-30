@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, key) in orders" :key="key" v-if="orders.length" :class="{'text-secondary': !item.is_paid}">
+        <tr v-for="(item, key) in orders" :key="key" v-if="orders.length" :class="{'text-muted': !item.is_paid}">
           <td>{{ item.create_at | TimeStampFilter }}</td>
           <td><span v-text="item.user.email" v-if="item.user"></span></td>
           <td>
