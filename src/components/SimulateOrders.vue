@@ -26,12 +26,53 @@
             </div>
           </div>
           <div class="card-footer d-flex">
-            <button type="button" class="btn btn-outline-secondary btn-sm">
-              <i class="fas fa-spinner fa-spin"></i>
+            <button @click="GetProductDetail(item.id)" type="button" class="btn btn-outline-secondary btn-sm">
+              <i v-if="status.loadingProductDetail === item.id" class="fas fa-spinner fa-spin"></i>
               查看更多
             </button>
             <button type="button" class="btn btn-outline-danger btn-sm ml-auto">
-              <i class="fas fa-spinner fa-spin"></i>
+              <i v-if="status.loadingAddToCart === item.id" class="fas fa-spinner fa-spin"></i>
+              加到購物車
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTE modal -->
+    <div class="modal fade" id="productDetailModal" tabindex="-1" role="dialog"
+      aria-labelledby="productDetailModal" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="productDetailModal">{{ productDetail.title }}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <img :src="productDetail.imageUrl" class="img-fluid" alt="">
+            <blockquote class="blockquote mt-3">
+              <p class="mb-0">{{ productDetail.content }}</p>
+              <footer class="blockquote-footer text-right">{{ productDetail.description }}</footer>
+            </blockquote>
+            <div class="d-flex justify-content-between align-items-baseline">
+              <!-- <div class="h4" v-if="!productDetail.price">{{ productDetail.origin_price }} 元</div> -->
+              <del class="h6" v-if="productDetail.price">原價 {{ productDetail.origin_price }} 元</del>
+              <div class="h4" v-if="productDetail.price">現在只要 {{ productDetail.price }} 元</div>
+            </div>
+            <select name="" class="form-control mt-3" v-model="productDetail.num">
+              <option :value="num" v-for="num in 10" :key="num">
+                選購 {{num}} {{productDetail.unit}}
+              </option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <div class="text-muted text-nowrap mr-3">
+              小計 <strong>{{ productDetail.num * productDetail.price }}</strong> 元
+            </div>
+            <button type="button" class="btn btn-primary">
+              <i class="fas fa-spinner fa-spin" v-if="productDetail.id === status.loadingAddToCart"></i>
               加到購物車
             </button>
           </div>
@@ -46,13 +87,19 @@
 </template>
 
 <script>
+import $ from 'jquery';
+
 export default {
   data(){
     return{
       isLoading:false,
       pagination:{},
       products:[],
-
+      productDetail:{},
+      status:{
+        loadingProductDetail:'',//當下選到的產品細節
+        loadingAddToCart:'',//當下選到的產品加入購物車
+      }
     }
   },
   mounted(){
@@ -69,6 +116,18 @@ export default {
         vm.products = response.data.products;
         vm.pagination = response.data.pagination;
         vm.isLoading = false;
+      });
+    },
+    GetProductDetail(itemId){
+      console.log("獲得產品細節資訊");
+      const api = `${process.env.API_USERPRODUCT}/${itemId}`;
+      const vm = this;
+      vm.status.loadingProductDetail = itemId;
+      this.$http.get(api).then(response => {
+        console.log(response.data);
+        vm.productDetail = response.data.product;
+        $('#productDetailModal').modal('show');
+        vm.status.loadingProductDetail = '';
       });
     },
   },
