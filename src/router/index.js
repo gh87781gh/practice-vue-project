@@ -7,6 +7,7 @@ import Dashboard from '@/components/Dashboard';
 import Products from '@/components/products';
 import Orders from '@/components/Orders';
 import Coupons from '@/components/Coupons';
+import SimulateOrders from '@/components/SimulateOrders';
 
 
 Vue.use(Router);
@@ -45,6 +46,11 @@ export default new Router({
           name: 'coupons',
           component: Coupons,
           meta: { requiresAuth: true }
+        },
+        {
+          path: 'simulate_orders',
+          name: 'SimulateOrders',
+          component: SimulateOrders,
         },
       ],
     },

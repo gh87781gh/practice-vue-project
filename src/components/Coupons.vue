@@ -148,12 +148,8 @@
 <script>
 import $ from 'jquery';
 import 'bootstrap-datepicker';
-import Pagination from './lib/Pagination';
 
 export default {
-  components:{
-    Pagination,
-  },
   data() {
     return {
       isLoading: false,

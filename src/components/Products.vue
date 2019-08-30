@@ -175,12 +175,8 @@
 
 <script>
 import $ from 'jquery'; 
-import Pagination from './lib/Pagination';
 
 export default {
-  components:{
-    Pagination,
-  },
   data() {
     return {
       products: [],
