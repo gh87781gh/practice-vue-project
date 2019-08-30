@@ -8,6 +8,7 @@ import Products from '@/components/products';
 import Orders from '@/components/Orders';
 import Coupons from '@/components/Coupons';
 import SimulateOrders from '@/components/SimulateOrders';
+import CheckOut from '@/components/CheckOut';
 
 
 Vue.use(Router);
@@ -51,6 +52,11 @@ export default new Router({
           path: 'simulate_orders',
           name: 'SimulateOrders',
           component: SimulateOrders,
+        },
+        {
+          path: 'check_out/:id', //動態路由
+          name: 'CheckOut',
+          component: CheckOut,
         },
       ],
     },

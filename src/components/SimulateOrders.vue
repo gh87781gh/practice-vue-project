@@ -309,6 +309,10 @@ export default {
       const vm = this;
       this.$http.post(api,{data:vm.form}).then(response => {
         console.log(response.data);
+        console.log(response.data.orderId);
+        if(response.data.success){
+          vm.$router.push(`/dashboard/check_out/${response.data.orderId}`);
+        }
       });
     },
   },
