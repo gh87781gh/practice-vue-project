@@ -95,43 +95,47 @@
     </div>
 
     <!-- NOTE: form -->
-    <div class="my-5 row justify-content-center">
-      <form class="col-md-6">
-        <div class="form-group">
-          <label for="useremail">Email</label>
-          <input type="email" class="form-control" name="email" id="useremail"
-            v-model="form.user.email" placeholder="請輸入 Email" required>
-          <span class="text-danger"></span>
-        </div>
-      
-        <div class="form-group">
-          <label for="username">收件人姓名</label>
-          <input type="text" class="form-control" name="name" id="username"
-            v-model="form.user.name" placeholder="輸入姓名">
-          <span class="text-danger"></span>
-        </div>
-      
-        <div class="form-group">
-          <label for="usertel">收件人電話</label>
-          <input type="tel" class="form-control" id="usertel" v-model="form.user.tel" placeholder="請輸入電話">
-        </div>
-      
-        <div class="form-group">
-          <label for="useraddress">收件人地址</label>
-          <input type="text" class="form-control" name="address" id="useraddress" v-model="form.user.address"
-            placeholder="請輸入地址">
-          <span class="text-danger">地址欄位不得留空</span>
-        </div>
-      
-        <div class="form-group">
-          <label for="comment">留言</label>
-          <textarea name="" id="comment" class="form-control" cols="30" rows="10" v-model="form.message"></textarea>
-        </div>
-        <div class="text-right">
-          <button @click="CreatOrder" class="btn btn-danger">送出訂單</button>
-        </div>
-      </form>
-    </div>
+    <ValidationObserver v-slot="{ invalid, passes }">
+      <div class="my-5 row justify-content-center">
+        <form @submit.prevent="passes(CreatOrder)" class="col-md-6">
+          <div class="form-group">
+            <label for="useremail">Email</label>
+            <ValidationProvider rules="required|email" v-slot="{ errors }" name="email">
+              <input v-model="form.user.email" :class="{'is-invalid':errors.length > 0}" class="form-control" type="text" placeholder="請輸入 Email">
+              <span class="text-danger">{{ errors[0] }}</span>
+            </ValidationProvider>
+          </div>
+          <div class="form-group">
+            <label for="useremail">收件人姓名</label>
+            <ValidationProvider rules="required" v-slot="{ errors }" name="姓名">
+              <input v-model="form.user.name" :class="{'is-invalid':errors.length > 0}" class="form-control" type="text" placeholder="請輸入 姓名">
+              <span class="text-danger">{{ errors[0] }}</span>
+            </ValidationProvider>
+          </div>
+          <div class="form-group">
+            <label for="useremail">收件人電話</label>
+            <ValidationProvider rules="required|numeric" v-slot="{ errors }" name="電話">
+              <input v-model="form.user.tel" :class="{'is-invalid':errors.length > 0}" class="form-control" type="text" placeholder="請輸入 電話">
+              <span class="text-danger">{{ errors[0] }}</span>
+            </ValidationProvider>
+          </div>
+          <div class="form-group">
+            <label for="useremail">收件人地址</label>
+            <ValidationProvider rules="required" v-slot="{ errors }" name="地址">
+              <input v-model="form.user.address" :class="{'is-invalid':errors.length > 0}" class="form-control" type="text" placeholder="請輸入 地址">
+              <span class="text-danger">{{ errors[0] }}</span>
+            </ValidationProvider>
+          </div>
+          <div class="form-group">
+            <label for="comment">留言</label>
+            <textarea name="" id="comment" class="form-control" cols="30" rows="10" v-model="form.message"></textarea>
+          </div>
+          <div class="text-right">
+            <button :disabled="invalid" class="btn btn-danger">送出訂單</button>
+          </div>
+        </form>
+      </div>
+    </ValidationObserver>
 
     <!-- NOTE modal -->
     <div class="modal fade" id="productDetailModal" tabindex="-1" role="dialog"
@@ -296,8 +300,11 @@ export default {
         }
       });
     },
-    CreatOrder(){
+    CreatOrder() {
       console.log("建立訂單");
+      // No need to worry about form state
+      // as this is only runs when the form is valid
+      // 🐿 ship it
       const api = process.env.API_USERORDER;
       const vm = this;
       this.$http.post(api,{data:vm.form}).then(response => {

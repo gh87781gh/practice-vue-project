@@ -1,6 +1,6 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-// 外部套件
+// 外部套件 ----------------------
 import Vue from 'vue';
 import router from './router';
 import axios from 'axios';
@@ -9,25 +9,40 @@ import 'bootstrap';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 
-// 自定義
+// vee-validate ----------------------
+import { ValidationProvider,ValidationObserver } from 'vee-validate';
+import { extend } from 'vee-validate';
+import * as rules from 'vee-validate/dist/rules';
+// vee-validate: loop over all rules
+for (let rule in rules) {extend(rule, rules[rule])};
+// Install and Activate the Arabic locale.
+import { localize } from 'vee-validate';
+import zh_TW from 'vee-validate/dist/locale/zh_TW.json';
+localize('zh_TW', zh_TW);
+
+// 自定義 ----------------------
 import App from './App';
 import './bus';
 import Pagination from './components/lib/Pagination';
 import CurrencyFilter from './components/filter/currencyFilter';
 import TimeStampFilter from './components/filter/timestampFilter';
 
+
 Vue.config.productionTip = false;
-// 啟用套件
+// 啟用套件 ----------------------
 Vue.use(VueAxios, axios);
-// 啟用自定義
+Vue.component('ValidationProvider', ValidationProvider);
+Vue.component('ValidationObserver', ValidationObserver);
+// 啟用自定義 ----------------------
 Vue.component('Loading',Loading);
 Vue.component('Pagination',Pagination);
 Vue.filter('CurrencyFilter',CurrencyFilter);
 Vue.filter('TimeStampFilter',TimeStampFilter);
-// 登入驗證附帶 Cookies 設定
+// 登入驗證附帶 Cookies 設定 ----------------------
 axios.defaults.withCredentials = true;
 
 /* eslint-disable no-new */
+
 new Vue({
   el: '#app',
   router,
