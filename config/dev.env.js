@@ -16,4 +16,6 @@ module.exports = merge(prodEnv, {
   API_GETCOUPONS: '"https://vue-course-api.hexschool.io/api/jennyshih/admin/coupons"',
   API_COUPON: '"https://vue-course-api.hexschool.io/api/jennyshih/admin/coupon"',
   API_USERCART: '"https://vue-course-api.hexschool.io/api/jennyshih/cart"',
+  API_USERCARTUSECOUPON: '"https://vue-course-api.hexschool.io/api/jennyshih/coupon"',
+  API_USERORDER: '"https://vue-course-api.hexschool.io/api/jennyshih/order"',
 })

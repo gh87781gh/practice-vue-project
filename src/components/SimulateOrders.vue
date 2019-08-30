@@ -56,7 +56,7 @@
             <th>單價</th>
           </thead>
           <tbody>
-            <tr v-for="item in cart.carts" :key="item.id" v-if="cart.carts">
+            <tr v-for="item in cart.carts" :key="item.id">
               <td class="align-middle">
                 <button @click="DelCart(item.id)" type="button" class="btn btn-outline-danger btn-sm">
                   <i class="far fa-trash-alt"></i>
@@ -69,7 +69,7 @@
                 </div>
               </td>
               <td class="align-middle">{{ item.qty }}/{{ item.product.unit }}</td>
-              <td class="align-middle text-right">{{ item.final_total | currencyFilter }}</td>
+              <td class="align-middle text-right">{{ item.total | currencyFilter }}</td>
             </tr>
           </tbody>
           <tfoot>
@@ -77,13 +77,60 @@
               <td colspan="3" class="text-right">總計</td>
               <td class="text-right">{{ cart.priceTotal | currencyFilter}}</td>
             </tr>
-            <tr v-if="cart.priceTotalFinal">
+            <tr v-if="cart.priceTotalFinal !== cart.priceTotal">
               <td colspan="3" class="text-right text-success">折扣價</td>
               <td class="text-right text-success">{{ cart.priceTotalFinal | currencyFilter}}</td>
             </tr>
           </tfoot>
         </table>
+        <div class="input-group mb-3 input-group-sm">
+          <input type="text" class="form-control" v-model="couponCode" placeholder="請輸入優惠碼">
+          <div class="input-group-append">
+            <button @click="UseCoupon" class="btn btn-outline-secondary" type="button">
+              套用優惠碼
+            </button>
+          </div>
+        </div>
       </div>
+    </div>
+
+    <!-- NOTE: form -->
+    <div class="my-5 row justify-content-center">
+      <form class="col-md-6">
+        <div class="form-group">
+          <label for="useremail">Email</label>
+          <input type="email" class="form-control" name="email" id="useremail"
+            v-model="form.user.email" placeholder="請輸入 Email" required>
+          <span class="text-danger"></span>
+        </div>
+      
+        <div class="form-group">
+          <label for="username">收件人姓名</label>
+          <input type="text" class="form-control" name="name" id="username"
+            v-model="form.user.name" placeholder="輸入姓名">
+          <span class="text-danger"></span>
+        </div>
+      
+        <div class="form-group">
+          <label for="usertel">收件人電話</label>
+          <input type="tel" class="form-control" id="usertel" v-model="form.user.tel" placeholder="請輸入電話">
+        </div>
+      
+        <div class="form-group">
+          <label for="useraddress">收件人地址</label>
+          <input type="text" class="form-control" name="address" id="useraddress" v-model="form.user.address"
+            placeholder="請輸入地址">
+          <span class="text-danger">地址欄位不得留空</span>
+        </div>
+      
+        <div class="form-group">
+          <label for="comment">留言</label>
+          <textarea name="" id="comment" class="form-control" cols="30" rows="10" v-model="form.message"></textarea>
+        </div>
+        <div class="text-right">
+          <button @click="CreatOrder" class="btn btn-danger">送出訂單</button>
+        </div>
+      </form>
     </div>
 
     <!-- NOTE modal -->
@@ -150,6 +197,16 @@ export default {
         carts:[],
         priceTotal:0,
         priceTotalFinal:0
+      },
+      couponCode:'',
+      form:{
+        user:{
+          name: '',
+          email: '',
+          tel: '',
+          address:'' 
+        },
+        message: ''
       },
     }
   },
@@ -223,6 +280,28 @@ export default {
         if(response.data.success){
           vm.GetCarts();
         }
+      });
+    },
+    UseCoupon(){
+      console.log('套用優惠券');
+      const api = process.env.API_USERCARTUSECOUPON;
+      const vm = this;
+      const coupon = {
+        code:vm.couponCode
+      }
+      this.$http.post(api,{data:coupon}).then(response => {
+        console.log(response.data);
+        if(response.data.success){
+          vm.cart.priceTotalFinal = response.data.data.final_total;
+        }
+      });
+    },
+    CreatOrder(){
+      console.log("建立訂單");
+      const api = process.env.API_USERORDER;
+      const vm = this;
+      this.$http.post(api,{data:vm.form}).then(response => {
+        console.log(response.data);
       });
     },
   },
