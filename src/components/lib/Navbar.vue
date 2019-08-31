@@ -2,7 +2,7 @@
   <div>
     <!-- page begin -->
     <nav class="navbar navbar-dark sticky-top bg-primary flex-md-nowrap p-0">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="javascript: void(0)">貓咪優物</a>
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="javascript: void(0)">優物選</a>
       <!-- <input
         class="form-control form-control-dark w-100"
         type="text"

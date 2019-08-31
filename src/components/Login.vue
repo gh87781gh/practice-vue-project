@@ -50,7 +50,7 @@ export default {
         console.log(response.data);
         // 登入成功即跳至首頁
         if (response.data.success) {
-          vm.$router.push('/dashboard/products');
+          vm.$router.push('/admin/dashboard/products');
         }else{
           alert('登入失敗，請重新登入');
         };

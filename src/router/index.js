@@ -18,15 +18,15 @@ export default new Router({
   routes: [
     {
       path: '*',
-      redirect: '/login' //NOTE 所有非設定路由都重新導向至登入頁
+      redirect: '/admin/login' //NOTE 所有非設定路由都重新導向至登入頁
     },
     {
-      path: '/login',
+      path: '/admin/login',
       name: 'login',
       component: Login
     },
     {
-      path: '/dashboard',
+      path: '/admin/dashboard',
       name: '',
       component: Dashboard,
       meta: { requiresAuth: true },
